@@ -362,9 +362,10 @@
 }
 
 .comentario{
-    font-size: 20px;
+    font-size: 16px;
     font-style: italic;
     margin-bottom: 20px;
+    line-height: 1.5;
 }
 /*Fim do feedback*/
 
@@ -433,7 +434,7 @@ html{
 }
 
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 448px){
 
     /*Parte que remove o espaço em branco*/
     .conteudo-sobre{
@@ -490,7 +491,7 @@ html{
         margin-bottom: 8px;
     }
     .carrossel-galeria img{
-        height: 370px;
+        height: 330px;
     }
 
     .carrosel-galeria{
@@ -541,6 +542,28 @@ html{
     #cardapio h1{
     margin-bottom: -10px;
     }
+    /*Fim do cardápio*/
+
+    /*ínicio do feedback*/
+    .feedbacks-container{
+        padding: 22px 15px;
+        min-height: 180px;
+    }
+    .feedback-card{
+        max-width: 220px;
+        margin: 0 auto;
+    }
+    .comentario{
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .feedback-voltar{
+        left: 5px;
+    }
+    .feedback-ir{
+        right: 5px;
+    }
+    
 }
 
 
