@@ -1,51 +1,103 @@
-//Carrosel das imagens ambiente
-// Lista de imagens
-const imagens = [
-    "Imagens/ambiente-um.png",
-    "Imagens/ambiente-dois.png",
-    "Imagens/ambiente-tres.png",
-    "Imagens/ambiente-quatro.png"
+// ===== LISTA DE SLIDES (imagem + link) =====
+const slides = [
+    {
+        img: "Imagens-localização-ambiente/1ambiente-um.png",
+        link: "https://maps.app.goo.gl/osgEGS7ZrdpuK2oD7"
+    }, 
+    {
+        img: "Imagens-localização-ambiente/2ambiente-dois.png",
+        link: "https://maps.app.goo.gl/osgEGS7ZrdpuK2oD7"
+    },
+    {
+        img: "Imagens-localização-ambiente/3ambiente-tres.png",
+        link: ""
+    },
+    {
+        img: "Imagens-localização-ambiente/4ambiente-quatro.png",
+        link: ""
+    },
+    {
+        img: "Imagens-localização-ambiente/5ambiente-cinco.png", 
+        link: ""
+    },
+    {
+        img: "Imagens-localização-ambiente/6ambiente-seis.png",
+        link: ""
+    }
 ];
 
-// Pega elementos do HTML
+// ===== ELEMENTOS DO HTML =====
 const imagem = document.getElementById("carrosel-img");
+const link = document.getElementById("carrosel-link");
 const btnProximo = document.getElementById("btn-ir");
 const btnVoltar = document.getElementById("btn-voltar");
+const container = document.querySelector(".carrossel-galeria");
 
+// ===== CONTROLE =====
 let indice = 0;
+let intervalo;
 
-// Função para atualizar imagem
+// ===== FUNÇÃO PRINCIPAL =====
 function atualizarImagem() {
-    imagem.src = imagens[indice];
+    imagem.src = slides[indice].img;
+
+    if (slides[indice].link !== "") {
+        link.href = slides[indice].link;
+        link.target = "_blank";
+    } else {
+        link.removeAttribute("href"); // desativa clique
+    }
 }
 
-// Próxima imagem
+// ===== PRÓXIMA IMAGEM =====
 function proximaImagem() {
-    indice++;
-    if (indice >= imagens.length) {
-        indice = 0;
-    }
+    indice = (indice + 1) % slides.length;
     atualizarImagem();
 }
 
-// Imagem anterior
+// ===== IMAGEM ANTERIOR =====
 function imagemAnterior() {
-    indice--;
-    if (indice < 0) {
-        indice = imagens.length - 1;
-    }
+    indice = (indice - 1 + slides.length) % slides.length;
     atualizarImagem();
 }
 
+// ===== AUTOPLAY =====
+function iniciarAutoPlay() {
+    intervalo = setInterval(proximaImagem, 5000); // 5 segundos
+}
 
-// Eventos dos botões
-btnProximo.addEventListener("click", proximaImagem);
-btnVoltar.addEventListener("click", imagemAnterior);
+// ===== RESET AUTOPLAY (quando clicar) =====
+function resetAutoPlay() {
+    clearInterval(intervalo);
+    iniciarAutoPlay();
+}
 
-// Troca automática a cada 3 segundos
-setInterval(proximaImagem, 5000);
+// ===== EVENTOS DOS BOTÕES =====
+btnProximo.addEventListener("click", () => {
+    proximaImagem();
+    resetAutoPlay();
+});
 
+btnVoltar.addEventListener("click", () => {
+    imagemAnterior();
+    resetAutoPlay();
+});
 
+// ===== PAUSAR AO PASSAR O MOUSE =====
+container.addEventListener("mouseenter", () => {
+    clearInterval(intervalo);
+});
+
+container.addEventListener("mouseleave", () => {
+    function iniciarAutoPlay() {
+    clearInterval(intervalo); // 🔥 impede duplicação
+    intervalo = setInterval(proximaImagem, 5000);
+}
+});
+
+// ===== INICIAR =====
+atualizarImagem();
+iniciarAutoPlay();
 
 //Carrosel dos comentários fedbacks
 const feedbacks = document.querySelectorAll(".feedback-card");
